@@ -1,0 +1,793 @@
+Nginx
+Nginx; yüksek eş zamanlı çalışma kabiliyeti, yüksek performans ve düşük hafıza 
+kullanımına odaklanılarak tasarlanmış bir Web sunucusudur. 
+Aynı zamanda ters vekil sunucusu, yük dengeleyici ve HTTP ön belleği olarak da kullanılabilir
+
+SSH (Secure Shell) güvenli veri iletimi için kriptografik ağ protokolüdür. 
+Ssh ile ağa bağlı olan iki bilgisayar arasında veri aktarımı güvenlik
+kanalı üzerinden güvensiz bir ağda yapılır.
+Bu durumda ağda Ssh ile haberleşen makinelerden biri ssh sunucusu diğeri ssh istemcisi olur.
+
+class-chat tr MLD 
+
+    1  sudo yum update -y
+    2  pwd
+    3  mkdir PROJE_ST
+    4  ls
+    5  history
+
+
+
+TCPKeepAlive yes
+ServerAliveInterval 120
+Host streamlit_server
+    HostName 54.211.74.20
+    IdentityFile C:\Users\smeng\.ssh\labpem.pem
+    User ec2-user
+
+
+Iden-Instructor  4 days ago
+boş bir klasör açın, oraya pem dosyanızı koyun, terminalde o klasöre gelin
+ssh -i TEST-1PEM.pem ec2-user@3.83.134.244
+komutunu orada
+
+sudo yum update
+
+   17  mkdir .envs
+   18  ls
+   19  ls -la
+   20  cd .envs/
+   21  python3 -m venv env_st
+   22  ls
+   23  source env_st/bin/activate
+---------------------------------------------------
+
+Iden-Instructor  8:58 PM
+çalışma ortamınızda, pip install ile yüklediğimiz kütüphaneler kendileriyle beraber
+ çalışan diğer kütüphaneleri de yüklüyor. En son dosyamızın çalıştığı bu ortamı 
+pip freeze ile kaydediyoruz ki, ilerde versiyonlar değiştiğinde, 
+biz kendi dosyamızı bu environment ta çalıştırabilelim
+
+-----------------------------------------------------------------
+
+C9117-Dustin  11:48 AM
+
+EC2 instance kur ve calistir.
+
+VS Code’u ac.
+
+VS Code sol alttan
+
+ Open a Remote Window 'a tikla.
+
+Open SSH Configuration File’a tikla.
+
+Users/macboook/ssh/config’e tikla.
+
+Burada instance’in public IPv4 adresini hostname’a kopyala.
+
+ Ayrica pem key’in path’ini IdentityFile’a kopyala ve kaydet.
+
+Pem anahtarini desktop’a da kopyalayip config sayfasinda onun path’ini kopyalayabilirim.
+
+Ardindan yine Open a Remote Window’a tikla ve cikan ekrandan Connect to Host’a tikla ve 
+hostname adlandirma sayfasinda verdiginiz config ismine tikla.
+
+Baglanti saglandiktan sonra open folder ec2-user klasorune baglan.
+Yeni terminal ac. Su anda cloud’daki bilgisayara baglandin.
+
+
+Cd ile home page’e git ve burada .envs adinda bir klasor olustur.
+
+Ardindan cd .envs ile bu klasorun icine gir ve “python3 -m venv env_streamlit” yaz ve enter’a bas.
+Ardindan “source env_streamlit/bin/activate” yap.
+
+Ardindan bu env_streamlit adindaki virtual environment’a kuracagimiz
+kutuphaneleri bir txt explorer’da bir txt dosyasi acarak icine kopyaliyoruz.
+
+Olusturdugumuz dosyada pakenler ve karsilarinda surumleri var,
+ornegin seaborn==0.11.2
+
+Bunlari kurmak icin venv icindeysen
+
+pip3 install -r requirements.txt   yapiyoruz.
+
+pip3 list 
+
+ile kurulan paketleri goruntuleyebiliyorum.
+Activate yaptigim klasoru deactivate yaparak cikis yapabiliyorum.
+
+Bu yaptiklarimizin aynisini local’de olusturdugumuz bir klasore de yapiyoruz.
+
+-----------------------------------------------
+from numpy.random import sample
+import streamlit as st
+import pandas as pd
+import numpy as np
+import datetime
+import matplotlib.pyplot as plt
+from PIL import Image
+
+st.title("This is a title")
+st.text('This is some text.')
+st.markdown('Streamlit is **_really_ cool**.:+1:')
+st.markdown("# This is a markdown" )
+st.markdown("## This is a markdown")
+st.header("This is a header")
+st.subheader("This is a subheader")
+
+st.success("This is a success message")
+st.info("This is a purely informational message")
+st.error("This is an error")
+st.help(range)
+st.write("Hello, *World!* :sunglasses:")
+img = Image.open("images.jpeg")
+st.image(img,caption="cattie",width=300)
+#st.image(img,caption="cattie",use_column_width=True)
+
+#my_video = open("ml.mov",'rb')
+#st.video(my_video)
+
+st.video("https://www.youtube.com/watch?v=uHKfrz65KSU")
+
+cbox = st.checkbox("Hide and Seek")
+if cbox:
+    st.write("Hide")
+else:
+    st.write("Seek")
+
+#st.radio("Select a color", ("blue","orange","yellow"))
+status = st.radio("Select a color", ("blue","orange","yellow"))
+st.write(f"Your favourite color is {status}")
+
+#st.button("Press me")
+if st.button("Press me"):
+    st.success("Bamm")
+
+#select box
+#sn = st.selectbox("Select a number",[1,2,3,4,5])
+sn = st.selectbox("Select a number",range(10))
+if sn<1:
+    st.write("No apples for you")
+else:
+    st.write(f"I will give you {sn} apples")  
+
+multiselect = st.multiselect("Select multiple numbers",[1,2,3,4,5])  
+st.write(f"you selected {multiselect}")
+
+option1 =st.slider("select a number",min_value=5, max_value=70, value=30, step=1)
+option2 =st.slider("Select a number", min_value=0.2, max_value=30.2, value=5.2, step=0.2)
+option1*option2
+
+-------------------------------------------------
+
+#date-time
+st.date_input(“Date”,datetime.datetime.now())
+st.time_input(“Time”, datetime.datetime.now())
+st.time_input(“Time”, datetime.time(12,0))
+#code
+st.code(“import pandas as pd”)
+st.code(“import pandas as pd\nimport numpy as np”)
+with st.echo():
+    import pandas as pd
+    import numpy as np
+    import matplotlib.pyplot as plt
+    df = pd.DataFrame({“a”:[1,2,3], “b”:[4,5,6]})
+    df
+
+-------------------------------------------------------
+
+#sidebar
+st.sidebar.title("Sidebar title")
+st.sidebar.markdown("## This is a markdown")
+a=st.sidebar.slider("input",0,5,2,1)
+st.write("# sidebar input result")
+st.success(a*a)
+
+#dataframe
+st.write("# dataframes")
+df = pd.read_csv("final_scout_dummy.csv", nrows=(100))
+st.table(df.head())  
+st.write(df.head()) #dynamic, you can sort, swiss knife
+st.dataframe(df.head())#dynamic
+
+
+----------------------------------------
+#charts
+st.write("# age")
+st.line_chart(df.age)
+
+------------------------
+
+st.write("# sidebar select")#double click to reset
+x=st.sidebar.slider("line chart input")
+srs = pd.Series(np.random.randn(x))
+st.line_chart(srs)
+
+-------------------------
+
+with st.echo():
+    import seaborn as sns
+    penguins = sns.load_dataset("penguins")
+    st.title("Hello")
+    fig = sns.pairplot(penguins, hue="species")
+    st.pyplot(fig)
+----------------------------------
+
+#Project Example
+
+# split the data into train and test
+from sklearn.model_selection import train_test_split
+import pickle
+# to build linear regression_model
+from sklearn.linear_model import LinearRegression
+
+with st.echo():
+    df = pd.read_csv("Advertising.csv")
+    X= df.drop("sales", axis=1)
+    y= df["sales"]
+    x_train, x_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42)
+    model = LinearRegression()
+    model.fit(x_train, y_train)
+    filename = 'finalized_model.sav'
+    pickle.dump(model, open(filename, 'wb'))
+    loaded_model = pickle.load(open(filename, 'rb'))
+    result = loaded_model.score(x_test, y_test)
+    st.write(result)
+    pred = model.predict([[100,200,300]])
+    st.write(pred)
+
+-----------------------------------------
+
+from numpy.random import sample
+import streamlit as st
+import pandas as pd
+import numpy as np
+import datetime
+import matplotlib.pyplot as plt
+from PIL import Image
+
+st.title("This is a title")
+st.text('This is some text.')
+st.markdown('Streamlit is **_really_ cool**.:+1:')
+st.markdown("# This is a markdown" )
+st.markdown("## This is a markdown")
+st.header("This is a header")
+st.subheader("This is a subheader")
+
+st.success("This is a success message")
+st.info("This is a purely informational message")
+st.error("This is an error")
+st.help(range)
+st.write("Hello, *World!* :sunglasses:")
+img = Image.open("images.jpeg")
+st.image(img,caption="cattie",width=300)
+#st.image(img,caption="cattie",use_column_width=True)
+
+#my_video = open("ml.mov",'rb')
+#st.video(my_video)
+
+st.video("https://www.youtube.com/watch?v=uHKfrz65KSU")
+
+cbox = st.checkbox("Hide and Seek")
+if cbox:
+    st.write("Hide")
+else:
+    st.write("Seek")
+
+#st.radio("Select a color", ("blue","orange","yellow"))
+status = st.radio("Select a color", ("blue","orange","yellow"))
+st.write(f"Your favourite color is {status}")
+
+#st.button("Press me")
+if st.button("Press me"):
+    st.success("Bamm")
+
+#select box
+#sn = st.selectbox("Select a number",[1,2,3,4,5])
+sn = st.selectbox("Select a number",range(10))
+if sn<1:
+    st.write("No apples for you")
+else:
+    st.write(f"I will give you {sn} apples")  
+
+multiselect = st.multiselect("Select multiple numbers",[1,2,3,4,5])  
+st.write(f"you selected {multiselect}")
+
+option1 =st.slider("select a number",min_value=5, max_value=70, value=30, step=1)
+option2 =st.slider("Select a number", min_value=0.2, max_value=30.2, value=5.2, step=0.2)
+option1*option2
+
+#date-time
+st.date_input("Date",datetime.datetime.now())
+st.time_input("Time", datetime.datetime.now())
+st.time_input("Time", datetime.time(12,0))
+
+#code
+st.code("import pandas as pd")
+st.code("import pandas as pd\nimport numpy as np")
+
+with st.echo():
+    import pandas as pd
+    import numpy as np
+    import matplotlib.pyplot as plt 
+    df = pd.DataFrame({"a":[1,2,3], "b":[4,5,6]})
+    df
+
+#sidebar
+st.sidebar.title("Sidebar title")
+st.sidebar.markdown("## This is a markdown")
+a=st.sidebar.slider("input",0,5,2,1)
+st.write("# sidebar input result")
+st.success(a*a)
+
+#dataframe
+st.write("# dataframes")
+df = pd.read_csv("final_scout_dummy.csv", nrows=(100))
+st.table(df.head())  
+st.write(df.head()) #dynamic, you can sort, swiss knife
+st.dataframe(df.head())#dynamic
+
+#charts
+st.write("# age")
+st.line_chart(df.age)
+
+st.write("# sidebar select")#double click to reset
+x=st.sidebar.slider("line chart input")
+srs = pd.Series(np.random.randn(x))
+st.line_chart(srs)
+
+with st.echo():
+    import seaborn as sns
+    penguins = sns.load_dataset("penguins")
+    st.title("Hello")
+    fig = sns.pairplot(penguins, hue="species")
+    st.pyplot(fig)
+
+#Project Example
+
+# split the data into train and test
+from sklearn.model_selection import train_test_split
+import pickle
+# to build linear regression_model
+from sklearn.linear_model import LinearRegression
+
+with st.echo():
+    df = pd.read_csv("Advertising.csv")
+    X= df.drop("sales", axis=1)
+    y= df["sales"]
+    x_train, x_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42)
+    model = LinearRegression()
+    model.fit(x_train, y_train)
+    filename = 'finalized_model.sav'
+    pickle.dump(model, open(filename, 'wb'))
+    loaded_model = pickle.load(open(filename, 'rb'))
+    result = loaded_model.score(x_test, y_test)
+    st.write(result)
+    pred = model.predict([[100,200,300]])
+    st.write(pred)
+
+--------------------------------------------
+
+st.table(df.head())
+a = float(st.sidebar.number_input("TV:",value=230.1, step=10.1))
+b = float(st.sidebar.number_input("radio:",value=37.8, step=10.1))
+c = float(st.sidebar.number_input("newspaper:",value=69.2, step=10.1))
+if st.button("Predict"): 
+    pred = model.predict([[a,b,c]])
+    st.write(pred)
+
+------------------------------------------
+
+#NLP-example
+
+#data = [“I love you”, “I hate you”],
+txt = st.text_area(“Enter a message”, “I love you”,20,150)
+from transformers import pipeline
+if st.button(“Analyze”):
+    st.success(“analyzing”)
+    sentiment_pipeline = pipeline(“text-classification”)
+    st.write(sentiment_pipeline(txt))
+-----------------------------------------------
+
+windowscular icin.\flask_env\Scripts\activate
+
+
+----------
+
+from flask import Flask
+app = Flask(__name__)
+@app.route('/')
+def hello():
+    return 'Hello World'
+if __name__=='__main__':
+    app.run('localhost', port=5000, debug=True)
+----------------------------
+
+FLASK
+
+
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Hello world"
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=80)
+
+--------------------------------------
+
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Hello world"
+
+@app.route("/<name>")
+def hello(name):
+    # name="John"
+    return f"Hello <b>{name}</b>, welcome to my homepage"
+    
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=80)
+
+-------------------------
+
+from flask import Flask
+app = Flask(__name__)
+@app.route("/")
+def home():
+    return "Hello world"
+@app.route("/<name>")
+def hello(name):
+    name="KK"
+    return f"Hello <b>{name}</b>, welcome to my homepage"
+data = {
+    "ankara":{"region":"middle anatolia", "pop":"3,5m", "places":["ulus","kizilay","sincan"]},
+    "izmir":{"region":"west anatolia", "pop":"4m", "places":["kordon", "saat kulesi", "göztepe", "konak"]},
+    "konya" :{"region":"middle anatolia", "pop":"2m", "places":["alaattin tepesi", "mevlana türbesi"]}
+        }
+@app.route('/city/<city>')
+def city(city):
+    return{"data":str(data[city])}
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=80)
+
+-----------------
+
+app.py
+from flask import Flask, request
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Hello world"
+
+@app.route("/<name>")
+def hello(name):
+    # name="John"
+    return f"Hello <b>{name.capitalize()}</b>, welcome to my homepage"
+
+
+
+data = {
+    "ankara":{"region":"middle anatolia", "pop":"3,5m","places":["ulus","kizilay","sincan"]},
+    "izmir":{"region":"west anatolia", "pop":"4m","places":["kordon","saat kulesi","goztepe","konak"]},
+    "konya":{"region":"middle anatolia","pop":"2m","places":["alaattin tepesi","mevlana turbesi"]}
+        }
+
+@app.route("/city/<city>")
+def city(city):
+    return {"data":str(data[city])}
+
+@app.route("/city/<city>/<feature>")
+def city_f(city,feature):
+    return {"data":str(data[city][feature])}    
+
+def mass_index(w,h):
+    return h**2/w
+
+@app.route("/calc")
+def calc():
+    w=float(request.args["w"])
+    h=float(request.args["h"])
+    return {"your mass index":f"{(mass_index(w,h)):.2f}"}   
+    
+
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=80)
+
+---------------------
+def mass_index(w, h):
+    return w/(h**2)
+
+----------------
+
+request göndermek için script:
+
+import requests
+url="http://localhost/api"
+data = {"TV":230, "radio":40,"newspaper":50}
+response = requests.post(url, json=data)
+print(response.text)
+
+--------------------------
+app.py son hali:
+
+from flask import Flask, request
+import numpy as np
+# import requests
+
+
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Hello world"
+
+@app.route("/<name>")
+def hello(name):
+    # name="John"
+    return f"Hello <b>{name.capitalize()}</b>, welcome to my homepage"
+
+
+
+data = {
+    "ankara":{"region":"middle anatolia", "pop":"3,5m","places":["ulus","kizilay","sincan"]},
+    "izmir":{"region":"west anatolia", "pop":"4m","places":["kordon","saat kulesi","goztepe","konak"]},
+    "konya":{"region":"middle anatolia","pop":"2m","places":["alaattin tepesi","mevlana turbesi"]}
+        }
+
+@app.route("/city/<city>")
+def city(city):
+    return {"data":str(data[city])}
+
+@app.route("/city/<city>/<feature>")
+def city_f(city,feature):
+    return {"data":str(data[city][feature])}    
+
+def mass_index(w,h):
+    return h**2/w
+
+@app.route("/calc")
+def calc():
+    w = int(request.args["w"])
+    h = int(request.args["h"])
+    return {"your mass index":f"{(mass_index(w,h)):.2f}"}   
+    
+
+def predict(vals):
+    coefs = np.array([1,2,3])
+    return sum(coefs*vals)
+
+
+
+
+@app.route("/api", methods=["GET", "POST"])
+def api():
+    data = request.json.values()
+    print(data)
+    vals = [float(i) for i in data]
+    print(vals)
+    pred = predict(vals)
+    print("result: ", pred)
+    return {"prediction result":f"$ {pred:.2f}"}
+
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=80)
+
+--------------------------------------------
+html 
+! ve ardinda tab tusu
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+
+------------------------
+
+api
+
+<!DOCTYPE html>
+<html lang=“en”>
+<head>
+    <meta charset=“UTF-8">
+    <meta http-equiv=“X-UA-Compatible” content=“IE=edge”>
+    <meta name=“viewport” content=“width=device-width, initial-scale=1.0">
+    <title>PREDICTION</title>
+</head>
+<body>
+    <form action=“#” method=“post” style=“padding-left:20% “>
+        <input type=“number” name=“TV” placeholder=“tv advertising” ><br>
+        <input type=“number” name=“radio” placeholder=“radio advertising”><br>
+        <input type=“number” name=“newspaper” placeholder=“newspaper advertising”><br>
+        <input type=“submit” value=“predict”>
+    </form>
+        {% if result%}
+    <p>{{result}}</p>
+        {%endif%}
+</body>
+</html>
+
+----------------
+
+predic 
+
+def predict(vals):
+    coefs = np.array([1,2,3])
+    return sum(coefs*vals)
+
+---------------------------
+
+en son hali
+
+app.py
+
+from flask import Flask, request, render_template
+import numpy as np
+# import requests
+
+
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Hello world"
+
+@app.route("/<name>")
+def hello(name):
+    # name="John"
+    return f"Hello <b>{name.capitalize()}</b>, welcome to my homepage"
+
+
+
+data = {
+    "ankara":{"region":"middle anatolia", "pop":"3,5m","places":["ulus","kizilay","sincan"]},
+    "izmir":{"region":"west anatolia", "pop":"4m","places":["kordon","saat kulesi","goztepe","konak"]},
+    "konya":{"region":"middle anatolia","pop":"2m","places":["alaattin tepesi","mevlana turbesi"]}
+        }
+
+@app.route("/city/<city>")
+def city(city):
+    return {"data":str(data[city])}
+
+@app.route("/city/<city>/<feature>")
+def city_f(city,feature):
+    return {"data":str(data[city][feature])}    
+
+def mass_index(w,h):
+    return h**2/w
+
+@app.route("/calc")
+def calc():
+    w = int(request.args["w"])
+    h = int(request.args["h"])
+    return {"your mass index":f"{(mass_index(w,h)):.2f}"}   
+    
+
+def predict(vals):
+    coefs = np.array([1,2,3])
+    return sum(coefs*vals)
+
+
+@app.route("/api", methods=["GET", "POST"])
+def api():
+    if request.method == "GET":
+        
+        return "my api server is running"
+    else:
+        data = request.json.values()
+        print(data)
+        vals = [float(i) for i in data]
+        print(vals)
+        pred = predict(vals)
+        print("result: ", pred)
+        return {"prediction result":f"$ {pred:.2f}"}
+    
+@app.route("/prediction", methods=["GET", "POST"])
+def prediction():
+    if request.method == "GET":
+        
+        return render_template("index.html")
+    else:
+        data = request.form.values()
+        print(data)
+        vals = [float(i) for i in data]
+        print(vals)
+        pred = predict(vals)
+        print("result: ", pred)
+        return render_template("result.html", result=pred)
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=80)
+
+
+----------------------------
+
+index.html
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>my api server</title>
+</head>
+<body>
+    <h1>Welcome to my API Server</h1>
+    <form method="post">
+        <input type="number" name="TV", placeholder="enter TV spending"> <br>
+        <input type="number" name="radio", placeholder="enter radio spending"> <br>
+        <input type="number" name="newspaper", placeholder="enter newspaper spending"> <br>
+        <input type="submit" value="predict">
+    </form>
+
+    {% if result%}
+    <p>{{ result }}</p>
+    {% else %}
+    <p>this is GET method</p>
+    {% endif %}
+</body>
+</html>
+
+---------------------------
+
+result.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>result page</title>
+</head>
+<body>
+    <h3>this result page</h3>
+    <p> score is {{result}} </p>
+</body>
+</html>
+
+-------------------
+Hocamlar ders sonrası tekrar ederken anladığım birkaç şey var. Yazayım da hala ben gibi eksik kalan arkadaş varsa faydası olsun.
+1- env olduğundan emin oluyoruz. Yoksa oluşturuyor, varsa paketleri yüklüyoruz. Ben bugün sıfırdan yapıp önce Flask sonra geçen derslerde paylaşılan requirement dosyasını (içindeki modülleri) kurdum.
+2- App.py dosyasını, kod yazarken yeni işlerken kaydediyoruz mutlaka, sonra Run ediyoruz. Ben defalarca kaydetmeden run edip neden çıktısını göremiyorum dedim. Siz yaşamayın :))
+3- Bazen Access hatası veriyor, birden fazla sekmede açıkmış bende ama fazlalığı kapatınca oluyordu ne hikmetse.
+4- Flaskın dosyaları templates klasörü içinde oluyormuş. Index ve result dosyalarımız vardı hatırlarsınız. Bir de static dosyalar vardı, onlar da static klasöründe olacakmış. Flaskın defaultu böyleymiş
+5- environment kurmak ve klasörler arası navigasyon için birkaç tanecik terminal kodu var toplamda, onları not defterine yazın githuba atın sonra kullanmak için bakarsınız. Ben notları düzenlersem atarım sizin içinde.
+Kendimce aklıma gelen ilk şeylerdi bunlar, paylaşmak istedim. Varsa önemli şu da diyen olursa thread altına yazabilirsiniz. Hayırlı geceler herkese.
+
+
+
+
+
+
+
+
+
+
+
+
+

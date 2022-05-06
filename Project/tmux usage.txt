@@ -1,0 +1,10 @@
+1. Create a new session
+    > tmux new -s mysession
+2. run your project (e.g. flask or streamlit)
+3. Detach from session leaving it running
+    Ctrl + b  >> d
+4. When you return to system, connect the session again
+    > tmux ls               #list available sessions to remember the name
+    > tmux attach -t mysession
+5. When you are finished with the session, stop it
+    > tmux kill-session -t mysession
